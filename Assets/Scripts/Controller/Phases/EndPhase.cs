@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class EndPhase : Phase
 {
-
-    public void OnClick(Card card)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnClick(Deck Deck)
+    public void OnClick(Interactable interactable)
     {
         throw new System.NotImplementedException();
     }

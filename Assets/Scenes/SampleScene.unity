@@ -1977,6 +1977,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f7902d3fa518144586a3dd8946d1073, type: 2}
   - {fileID: 11400000, guid: 96fa680f898d69e43beaba4cadc0b5f3, type: 2}
   - {fileID: 11400000, guid: 75403cd8c0012e14a979fe6a0dc00f45, type: 2}
+  cards: []
   currentPlayer: 0
 --- !u!114 &1901995357
 MonoBehaviour:

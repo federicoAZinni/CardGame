@@ -5,12 +5,8 @@ using UnityEngine;
 public class InteractionUI : MonoBehaviour
 {
     
-    public virtual void OnClick(Card Card)
+    public virtual void OnClick(Interactable interactable)
     {
-        GameManager.Instance.OnClick(Card);
-    }
-    public virtual void OnClick(Deck deck)
-    {
-        GameManager.Instance.OnClick(deck);
+        GameManager.Instance.OnClick(interactable);
     }
 }

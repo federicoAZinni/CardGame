@@ -7,7 +7,6 @@ public interface Phase
     public void OnStart();
     public void OnUpdate();
     public void OnEnd();
-    public void OnClick(Card card);
-    public void OnClick(Deck Deck);
+    public void OnClick(Interactable interactable);
 
 }

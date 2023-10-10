@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class FieldSlot : MonoBehaviour
+public class FieldSlot : MonoBehaviour, Interactable
 {
     public TypeFieldSlot typeFieldSlot;
     public bool canAttack;

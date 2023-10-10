@@ -17,7 +17,7 @@ public class DeckUI : InteractionUI
 
     }
 
-    public override void OnClick(Deck card) // pasamos el Deck o la carta por los enevetos del boton
+    public override void OnClick(Interactable interactable) // pasamos el Deck o la carta por los enevetos del boton
     {
         base.OnClick(currentDeck);
     }

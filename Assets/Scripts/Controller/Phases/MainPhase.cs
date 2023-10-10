@@ -15,14 +15,13 @@ public class MainPhase : Phase
 
     Card currentCardSeleted;
 
-    public void OnClick(Card card)
+
+    public void OnClick(Interactable interactable)
     {
-        currentCardSeleted = card;
+        currentCardSeleted = (Card)interactable;
     }
 
-    public void OnClick(Deck Deck) {}
-
-    public void ChangeCurrentActionSelectedToNothing()
+    public void ChangeCurrentActionSelectedToNothing()// se llama en el evento OnFinish de cada Action
     {
         currentActionSelected = ActionSelected.Nothing;
     }
@@ -89,10 +88,12 @@ public class MainPhase : Phase
     }
     public void ActiveSummonAction()// Inicialización de una nueva Sumoon
     {
+        Debug.Log("Summon Action Selected");
+        currentSummonAction = new SummonAction();
 
+        currentActionSelected = ActionSelected.Summon;
     }
 
-    
 }
 public enum ActionSelected
 {

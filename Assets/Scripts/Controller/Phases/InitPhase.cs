@@ -7,14 +7,9 @@ public class InitPhase : Phase
     public int TurnToEndInitPhase = 7;
     public int currentTurnInit = 0;
 
-    public void OnClick(Card card)
+    public void OnClick(Interactable interactable)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnClick(Deck Deck)
-    {
-        //DrawOneCardOfDeck(deck,Acá se puede pasar la referencia directamente desde GameManager.Instances.PlayerHand);
+        
     }
 
     public void OnEnd()
@@ -42,5 +37,5 @@ public class InitPhase : Phase
         currentTurnInit++;
     }
 
-  
+   
 }

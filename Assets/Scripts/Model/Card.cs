@@ -27,7 +27,7 @@ struct EffectTypes
 }
 
 [Serializable]
-public class Card
+public class Card : Interactable
 {
     public Sprite cardSprite;
     //public Race race;

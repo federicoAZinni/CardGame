@@ -6,7 +6,10 @@ public class DrawPhase : Phase
 {
     public DrawMode currentDrawMode;
 
-
+    public void OnClick(Interactable interactable)
+    {
+        throw new System.NotImplementedException();
+    }
     public void OnEnd()
     {
         throw new System.NotImplementedException();
@@ -20,16 +23,6 @@ public class DrawPhase : Phase
     public void OnUpdate()
     {
         throw new System.NotImplementedException();
-    }
-
-    public void OnClick(Card card)
-    {
-        
-    }
-
-    public void OnClick(Deck Deck)
-    {
-        
     }
 
 

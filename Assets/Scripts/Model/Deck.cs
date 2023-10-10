@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck : MonoBehaviour, Interactable
 {
     public TypeOfDeck typeOfDeck;
     public List<Card> cardsSameTypeofDeck;

@@ -11,27 +11,28 @@ public class CardUI : InteractionUI
     [Header("--- All UI object Refs---")]
     [SerializeField] TextMeshProUGUI name_Txt;
     [SerializeField] TextMeshProUGUI soulPoint_Txt;
+    [SerializeField] GameObject menuPanel;
 
+    [Header("--- Menu Button Refs---")]
+    [SerializeField] Button Summon_Btn;
+    private void Awake()
+    {
+        Summon_Btn.onClick.AddListener(() => { GameManager.Instance.StartSummonBtn(); });
+    }
 
     private void Start()//  para testear no mas 
     {
         SetCard(GameManager.Instance.ReturnNewCard());
     }
 
-
     public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
     {
         base.OnClick(currentCard);
     }
-
     public void ShowMenu()
     {
-
-    }
-
-    public void HideMenu()
-    {
-
+        if (menuPanel.activeSelf) menuPanel.SetActive(false);
+        else menuPanel.SetActive(true);
     }
 
     public void SetCard(Card card)

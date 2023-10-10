@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public CardData[] listaCardData; // no ma pa probar cositas 
+    public List<Card> cards;
 
     public int currentPlayer;
 
@@ -25,6 +26,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
+        foreach (CardData cardData in listaCardData)
+        {
+            cards.Add(new Card(cardData));
+        }
+
         ChangePhase(new InitPhase());
     }
 
@@ -40,13 +47,9 @@ public class GameManager : MonoBehaviour
         currentPhase.OnStart();
     }
 
-    public void OnClick(Card card)
+    public void OnClick(Interactable interactable)
     {
-        currentPhase.OnClick(card);
-    }
-    public void OnClick(Deck deck)
-    {
-        currentPhase.OnClick(deck);
+        currentPhase.OnClick(interactable);
     }
 
     public void ChangeCurrentPlayer()
@@ -78,7 +81,11 @@ public class GameManager : MonoBehaviour
     }
     public void StartSummonBtn()
     {
-        
+        if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
+        {
+            MainPhase phase = (MainPhase)currentPhase;
+            phase.ActiveSummonAction();
+        }
     }
 
     public Card ReturnNewCard()// solo para testear
