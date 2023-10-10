@@ -34,9 +34,9 @@ public class FieldSlotUI : InteractionUI
         soulPoint_Txt.text = fieldSlot.currentCard.soulPoints.ToString();
     }
 
-    public override void OnClick(Interactable card) // pasamos el Deck o la carta por los enevetos del boton
+    public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
     {
-        base.OnClick(fieldSlot.currentCard);
+        base.OnClick(fieldSlot);
     }
 
 }

@@ -10,13 +10,10 @@ public class FieldSlot : MonoBehaviour, Interactable
     public Card currentCard;
     [SerializeField] FieldSlotUI fieldSlotUI;
 
-    public bool SetCard(Card card)
+    public void SetCard(Card card)
     {
-        if (currentCard != null) return false;
-
         currentCard = card;
         fieldSlotUI.SetFieldSlotUI();
-        return true;
     }
 
     public void RemoveCard()

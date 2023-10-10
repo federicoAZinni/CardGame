@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 public class SummonAction : Action
 {
-    public Card card1;
-    public Card card2;
+    public Card card;
+    public FieldSlot fieldSlot;
 
     bool isFinish;
     public override void ActionActivation()
@@ -21,16 +21,16 @@ public class SummonAction : Action
 
     async void Summon()
     {
-        Debug.Log("Start Battle of BattleAction");
+        Debug.Log("Start Summon Action");
 
         while (!isFinish)
         {
-            if (card1 != null && card2 != null)
+            if (fieldSlot != null && card != null)
             {
                 isFinish = true;
-                ChainManager.Instances.AddActionToChain(this);
+                fieldSlot.SetCard(card);
                 OnFinishAction?.Invoke();
-                Debug.Log("Add Action to Chain");
+                OnEndSummon();
             }
             await Task.Yield();
         }
