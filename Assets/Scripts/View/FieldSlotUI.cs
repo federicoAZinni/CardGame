@@ -23,8 +23,13 @@ public class FieldSlotUI : InteractionUI
     }
     public void ShowMenu()
     {
-        if(menuPanel.activeSelf) menuPanel.SetActive(false);
-        else menuPanel.SetActive(true);
+        if (base.canShowMenu) return;
+        menuPanel.SetActive(true);
+    }
+
+    public void HideMenu()
+    {
+        menuPanel.SetActive(false);
     }
 
 
@@ -36,6 +41,7 @@ public class FieldSlotUI : InteractionUI
 
     public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
     {
+        if (fieldSlot.isOcuppied) return;
         base.OnClick(fieldSlot);
     }
 

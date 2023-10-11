@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class MainPhase : Phase
 {
-
     public int countOfSummonCriatures;
     bool TrapSummoned;
-    public BattleAction currentBattleAction;
-    public EffectAction currentEffectAction;
-    public SummonAction currentSummonAction;
+    BattleAction currentBattleAction;
+    EffectAction currentEffectAction;
+    SummonAction currentSummonAction;
 
     ActionSelected currentActionSelected = ActionSelected.Nothing;
 
@@ -25,11 +24,13 @@ public class MainPhase : Phase
         if (interactable.GetType().IsEquivalentTo(typeof(FieldSlot))) { currentFieldSlotSeleted = (FieldSlot)interactable; Debug.Log("Entro fieldSlot"); }
     }
 
-    public void ChangeCurrentActionSelectedToNothing()// se llama en el evento OnFinish de cada Action
+    public void OnEndAction()// se llama en el evento OnFinish de cada Action
     {
         currentCardSeleted = null;
         currentDeckSeleted = null;
         currentFieldSlotSeleted = null;
+
+        GameManager.OnActionStart?.Invoke(false); // LLamamos este evento para que los ui puedan abrir los menus nuevamente
 
         currentActionSelected = ActionSelected.Nothing;
     }
@@ -37,7 +38,6 @@ public class MainPhase : Phase
     public void OnEnd()
     {
         Debug.Log("MainPhase End");
-        Debug.Log("Change Phase to EndPhase");
     }
 
     public void OnStart()
@@ -90,25 +90,26 @@ public class MainPhase : Phase
         currentCardSeleted = null;
         currentBattleAction = new BattleAction();
         currentBattleAction.ActionActivation();
-        currentBattleAction.OnFinishAction += ChangeCurrentActionSelectedToNothing;
+        currentBattleAction.OnFinishAction += OnEndAction;
 
         currentActionSelected = ActionSelected.Battle;
     }
     public void ActiveEffectAction()// Inicialización de una nueva Effect
     {
         Debug.Log("Effect Action Selected");
-        currentEffectAction = new GraveyardEffect();
+        currentEffectAction = new GraveyardEffect(); // crear el efecto de la carta
         currentEffectAction.ActionActivation();
-        currentEffectAction.OnFinishAction += ChangeCurrentActionSelectedToNothing;
+        currentEffectAction.OnFinishAction += OnEndAction;
 
         currentActionSelected = ActionSelected.Effect;
     }
     public void ActiveSummonAction()// Inicialización de una nueva Summon
     {
         Debug.Log("Summon Action Selected");
+        currentFieldSlotSeleted = null;
         currentSummonAction = new SummonAction();
         currentSummonAction.ActionActivation();
-        currentSummonAction.OnFinishAction += ChangeCurrentActionSelectedToNothing;
+        currentSummonAction.OnFinishAction += OnEndAction;
 
         currentActionSelected = ActionSelected.Summon;
     }

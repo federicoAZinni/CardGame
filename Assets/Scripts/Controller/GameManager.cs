@@ -20,14 +20,15 @@ public class GameManager : MonoBehaviour
     public CardData[] listaCardData; // no ma pa probar cositas 
     public List<Card> cards;
 
-    public int currentPlayer;
+    public static int currentPlayer;
 
     Phase currentPhase;
 
+    public static System.Action<bool> OnActionStart;
+
     private void Start()
     {
-
-        foreach (CardData cardData in listaCardData)
+        foreach (CardData cardData in listaCardData)// pa probar no mas
         {
             cards.Add(new Card(cardData));
         }
@@ -67,17 +68,24 @@ public class GameManager : MonoBehaviour
 
     }
 
+    //------------------------StartAction (Los llaman los botenes de las cartas)---------------------------------------------
     public void StartBattleBtn()
     {
         if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
         {
             MainPhase phase = (MainPhase)currentPhase;
             phase.ActiveBattleAction();
+            OnActionStart?.Invoke(true);
         }
     }
     public void StartEffectBtn()
     {
-        
+        if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
+        {
+            MainPhase phase = (MainPhase)currentPhase;
+            phase.ActiveEffectAction();
+            OnActionStart?.Invoke(true);
+        }
     }
     public void StartSummonBtn()
     {
@@ -85,7 +93,16 @@ public class GameManager : MonoBehaviour
         {
             MainPhase phase = (MainPhase)currentPhase;
             phase.ActiveSummonAction();
+            OnActionStart?.Invoke(true);
         }
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+
+
+    public void TurnOver()
+    {
+        ChangeCurrentPlayer();
+        ChangePhase(new DrawPhase());
     }
 
     public Card ReturnNewCard()// solo para testear

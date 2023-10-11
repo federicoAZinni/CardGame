@@ -31,8 +31,12 @@ public class CardUI : InteractionUI
     }
     public void ShowMenu()
     {
-        if (menuPanel.activeSelf) menuPanel.SetActive(false);
-        else menuPanel.SetActive(true);
+        if (base.canShowMenu) return;
+        menuPanel.SetActive(true);
+    }
+    public void HideMenu()
+    {
+        menuPanel.SetActive(false);
     }
 
     public void SetCard(Card card)

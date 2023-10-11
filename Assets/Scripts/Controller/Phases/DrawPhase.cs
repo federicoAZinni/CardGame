@@ -12,17 +12,18 @@ public class DrawPhase : Phase
     }
     public void OnEnd()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("End Draw Phase");
     }
 
     public void OnStart()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Start Draw Phase Player: " + GameManager.currentPlayer);
     }
 
     public void OnUpdate()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Update Draw Phase");
+        if (Input.GetMouseButtonDown(0)) GameManager.Instance.ChangePhase(new MainPhase());
     }
 
 
