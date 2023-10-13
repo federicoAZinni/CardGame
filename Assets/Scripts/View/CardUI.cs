@@ -17,12 +17,7 @@ public class CardUI : InteractionUI
     [SerializeField] Button Summon_Btn;
     private void Awake()
     {
-        Summon_Btn.onClick.AddListener(() => { GameManager.Instance.StartSummonBtn(); });
-    }
-
-    private void Start()//  para testear no mas 
-    {
-        SetCard(GameManager.Instance.ReturnNewCard());
+        Summon_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(currentCard.player, ActionSelected.Summon); });  //solo llama a la acion si es el turno
     }
 
     public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
@@ -31,6 +26,7 @@ public class CardUI : InteractionUI
     }
     public void ShowMenu()
     {
+        if (GameManager.currentPlayer != currentCard.player) { Debug.Log("No es tu turno"); return; } //solo se abre el menu si es el turno
         if (base.canShowMenu) return;
         menuPanel.SetActive(true);
     }
@@ -45,5 +41,12 @@ public class CardUI : InteractionUI
         soulPoint_Txt.text = card.soulPoints.ToString();
 
         currentCard = card;
+    }
+    public void RemoveCardToNull()
+    {
+        name_Txt.text = "";
+        soulPoint_Txt.text = "";
+
+        currentCard = null;
     }
 }

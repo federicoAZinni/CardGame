@@ -11,7 +11,9 @@ public class FieldSlot : MonoBehaviour, Interactable
     public bool isOcuppied;
     public int player;
     [SerializeField] FieldSlotUI fieldSlotUI;
-    
+
+    public int Player => player;
+
     public void SetCard(Card card)
     {
         isOcuppied = true;

@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface Interactable
 { 
+    public int Player { get;}
 }

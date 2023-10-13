@@ -57,6 +57,5 @@ public class Card : Interactable
         this.attribute3 = _card.attribute3;
     }
 
-
-
+    public int Player => player;
 }

@@ -27,11 +27,16 @@ public class SummonAction : Action
         {
             if (fieldSlot != null && card != null)
             {
-                isFinish = true;
-                fieldSlot.SetCard(card);
-                OnFinishAction?.Invoke();
-                OnEndSummon();
-            }
+                if (fieldSlot.player == card.player) 
+                {
+                    isFinish = true;
+                    fieldSlot.SetCard(card);
+                    GameManager.Instance.players[card.player].RemoveCardToHand(card); // saco la carta de la mano
+                    OnFinishAction?.Invoke();
+                    OnEndSummon();
+                }
+                else Debug.Log("El fieldSlot seleccionado es del otro player"); 
+            }    
             await Task.Yield();
         }
     }

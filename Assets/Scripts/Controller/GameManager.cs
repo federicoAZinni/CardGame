@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public CardData[] listaCardData; // no ma pa probar cositas 
     public List<Card> cards;
+    public PlayerHand[] players; // no ma pa probar cositas 
+    
 
     public static int currentPlayer;
 
@@ -31,6 +33,16 @@ public class GameManager : MonoBehaviour
         foreach (CardData cardData in listaCardData)// pa probar no mas
         {
             cards.Add(new Card(cardData));
+        }
+
+        for (int k = 0; k < players.Length; k++)// pa probar no mas
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Card card = ReturnNewCard();
+                card.player = k;
+                players[k].AddCardToHand(card);
+            }
         }
 
         ChangePhase(new InitPhase());
@@ -69,30 +81,30 @@ public class GameManager : MonoBehaviour
     }
 
     //------------------------StartAction (Los llaman los botenes de las cartas)---------------------------------------------
-    public void StartBattleBtn()
+    public void StartActionBtn(int player, ActionSelected action)
     {
+        if(player != currentPlayer) { Debug.Log("No es tu turno"); return; }
+
         if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
         {
             MainPhase phase = (MainPhase)currentPhase;
-            phase.ActiveBattleAction();
-            OnActionStart?.Invoke(true);
-        }
-    }
-    public void StartEffectBtn()
-    {
-        if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
-        {
-            MainPhase phase = (MainPhase)currentPhase;
-            phase.ActiveEffectAction();
-            OnActionStart?.Invoke(true);
-        }
-    }
-    public void StartSummonBtn()
-    {
-        if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
-        {
-            MainPhase phase = (MainPhase)currentPhase;
-            phase.ActiveSummonAction();
+            switch (action)
+            {
+                case ActionSelected.Battle:
+                    phase.ActiveBattleAction();
+                    break;
+                case ActionSelected.Effect:
+                    phase.ActiveEffectAction();
+                    break;
+                case ActionSelected.Summon:
+                    phase.ActiveSummonAction();
+                    break;
+                case ActionSelected.Nothing:
+                    break;
+                default:
+                    break;
+            }
+            
             OnActionStart?.Invoke(true);
         }
     }

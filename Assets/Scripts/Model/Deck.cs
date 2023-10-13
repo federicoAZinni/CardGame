@@ -7,6 +7,9 @@ public class Deck : MonoBehaviour, Interactable
     public TypeOfDeck typeOfDeck;
     public List<Card> cardsSameTypeofDeck;
     public CardData[] cardData;
+    public int playerId = GameManager.currentPlayer;
+    public int Player { get { return playerId; } }
+
     private void Start()
     {
         for (int i = 0; i < 5; i++)
