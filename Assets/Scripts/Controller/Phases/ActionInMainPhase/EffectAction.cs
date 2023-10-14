@@ -16,7 +16,7 @@ public class EffectAction : Action
 
     protected virtual void OnEndEffect()
     {
-       
+        Debug.Log("END Effect");
     }
 
     public override void ActionSolve()

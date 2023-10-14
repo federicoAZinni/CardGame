@@ -51,6 +51,7 @@ public class Card : Interactable
         this.killPoints = _card.killPoints;
         this.soulPoints = _card.soulPoints;
         this.fieldEffect = _card.fieldEffect;
+        this.effect = _card.effect;
         this.sacrificeEffect = _card.sacrificeEffect;
         this.attribute1 = _card.attribute1;
         this.attribute2 = _card.attribute2;

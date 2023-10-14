@@ -94,10 +94,24 @@ public class MainPhase : Phase
 
         currentActionSelected = ActionSelected.Battle;
     }
-    public void ActiveEffectAction()// Inicialización de una nueva Effect
+    public void ActiveEffectAction(string effect)// Inicialización de una nueva Effect
     {
         Debug.Log("Effect Action Selected");
-        currentEffectAction = new GraveyardEffect(); // crear el efecto de la carta
+        switch (effect)
+        {
+            case EffectTypes.DestroyEffect:
+                currentEffectAction = new DestroyEffect(); // crear el efecto de la carta
+                break;
+            case EffectTypes.GraveyardEffect:
+                currentEffectAction = new GraveyardEffect(); // crear el efecto de la carta
+                break;
+            case EffectTypes.PermanentBuffEffect:
+                currentEffectAction = new BuffEffect(); // crear el efecto de la carta
+                break;
+            default:
+                break;
+        }
+        
         currentEffectAction.ActionActivation();
         currentEffectAction.OnFinishAction += OnEndAction;
 

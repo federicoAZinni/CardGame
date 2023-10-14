@@ -626,7 +626,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!114 &214374133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2642,6 +2642,10 @@ MonoBehaviour:
   players:
   - {fileID: 214374135}
   - {fileID: 1563821873}
+  effectType:
+  - Destroy Creatures
+  - Graveyard Summon
+  - Permanent Buff
 --- !u!114 &1901995357
 MonoBehaviour:
   m_ObjectHideFlags: 0

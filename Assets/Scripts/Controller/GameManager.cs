@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     public CardData[] listaCardData; // no ma pa probar cositas 
     public List<Card> cards;
     public PlayerHand[] players; // no ma pa probar cositas 
-    
+    public string[] effectType = { EffectTypes.DestroyEffect, EffectTypes.GraveyardEffect, EffectTypes.PermanentBuffEffect }; // no ma pa probar cositas 
+
 
     public static int currentPlayer;
 
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (CardData cardData in listaCardData)// pa probar no mas
         {
+            cardData.effect = effectType[Random.Range(0, effectType.Length)];
             cards.Add(new Card(cardData));
         }
 
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour
     }
 
     //------------------------StartAction (Los llaman los botenes de las cartas)---------------------------------------------
-    public void StartActionBtn(int player, ActionSelected action)
+    public void StartActionBtn(int player, ActionSelected action , string effect ="")
     {
         if(player != currentPlayer) { Debug.Log("No es tu turno"); return; }
 
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
                     phase.ActiveBattleAction();
                     break;
                 case ActionSelected.Effect:
-                    phase.ActiveEffectAction();
+                    phase.ActiveEffectAction(effect);
                     break;
                 case ActionSelected.Summon:
                     phase.ActiveSummonAction();

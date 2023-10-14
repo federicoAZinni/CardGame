@@ -11,6 +11,7 @@ public class CardData : ScriptableObject
     public int killPoints;
     public int soulPoints;
     public string fieldEffect;
+    public string effect;
     public string sacrificeEffect;
     public Attribute attribute1, attribute2, attribute3;
 
