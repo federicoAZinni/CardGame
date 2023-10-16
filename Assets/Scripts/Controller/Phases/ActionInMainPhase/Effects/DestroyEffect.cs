@@ -31,6 +31,7 @@ public class DestroyEffect : EffectAction
             if (countClick > 5)
             {
                 isFinish = true;
+                OnFinishAction?.Invoke();
                 OnEndEffect();
             }
             await Task.Yield();

@@ -25,12 +25,17 @@ public class FieldSlot : MonoBehaviour, Interactable
     {
         isOcuppied = false;
         currentCard = null;
-        fieldSlotUI.SetFieldSlotUI();
+        fieldSlotUI.RemoveFieldSlotToNull();
     }
 
     public void ResetAttack()
     {
         canAttack = true;
+    }
+    public void SendCardToGraveyard()
+    {
+        GameManager.Instance.graveyards[currentCard.player].AddCardToGraveyard(currentCard);
+        RemoveCard();
     }
 }
 public enum TypeFieldSlot

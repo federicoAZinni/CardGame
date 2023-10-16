@@ -29,11 +29,15 @@ public class SummonAction : Action
             {
                 if (fieldSlot.player == card.player) 
                 {
-                    isFinish = true;
-                    fieldSlot.SetCard(card);
-                    GameManager.Instance.players[card.player].RemoveCardToHand(card); // saco la carta de la mano
-                    OnFinishAction?.Invoke();
-                    OnEndSummon();
+                    if (!fieldSlot.isOcuppied)
+                    {
+                        isFinish = true;
+                        fieldSlot.SetCard(card);
+                        GameManager.Instance.players[card.player].RemoveCardToHand(card); // saco la carta de la mano
+                        OnFinishAction?.Invoke();
+                        OnEndSummon();
+                    }
+                    else Debug.Log("El fieldSlot seleccionado está acupado"); 
                 }
                 else Debug.Log("El fieldSlot seleccionado es del otro player"); 
             }    

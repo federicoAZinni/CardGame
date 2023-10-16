@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public CardData[] listaCardData; // no ma pa probar cositas 
     public List<Card> cards;
     public PlayerHand[] players; // no ma pa probar cositas 
+    public Graveyard[] graveyards;
     public string[] effectType = { EffectTypes.DestroyEffect, EffectTypes.GraveyardEffect, EffectTypes.PermanentBuffEffect }; // no ma pa probar cositas 
 
 
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
     }
 
     //------------------------StartAction (Los llaman los botenes de las cartas)---------------------------------------------
-    public void StartActionBtn(int player, ActionSelected action , string effect ="")
+    public void StartActionBtn(int player, ActionSelected action , string effect ="",FieldSlot fieldSlot = null)
     {
         if(player != currentPlayer) { Debug.Log("No es tu turno"); return; }
 
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
             switch (action)
             {
                 case ActionSelected.Battle:
-                    phase.ActiveBattleAction();
+                    phase.ActiveBattleAction(fieldSlot);
                     break;
                 case ActionSelected.Effect:
                     phase.ActiveEffectAction(effect);

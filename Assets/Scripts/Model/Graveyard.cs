@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Graveyard : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<Card> graveyardList;
 
-    // Update is called once per frame
-    void Update()
+    public void AddCardToGraveyard(Card card)
     {
-        
+        graveyardList.Add(card);
     }
 }

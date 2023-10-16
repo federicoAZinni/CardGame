@@ -19,11 +19,11 @@ public class FieldSlotUI : InteractionUI
 
     private void Awake()
     {
-        Battle_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(fieldSlot.player,ActionSelected.Battle); }); //solo llama a la acion si es el turno
+        Battle_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(fieldSlot.player,ActionSelected.Battle,"",fieldSlot); }); //solo llama a la acion si es el turno
     }
     public void ShowMenu()
     {
-        if (GameManager.currentPlayer != fieldSlot.player) { Debug.Log("No es tu turno"); return; } //solo se abre el menu si es el turno
+        if (GameManager.currentPlayer != fieldSlot.player) return; //solo se abre el menu si es el turno
         if (!fieldSlot.isOcuppied) return;
         if (base.canShowMenu) return;
         menuPanel.SetActive(true);
@@ -41,9 +41,16 @@ public class FieldSlotUI : InteractionUI
         soulPoint_Txt.text = fieldSlot.currentCard.soulPoints.ToString();
     }
 
+    public void RemoveFieldSlotToNull()
+    {
+        name_Txt.text = "";
+        soulPoint_Txt.text = "";
+        //effect_Txt.text = "";
+    }
+
     public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
     {
-        if (fieldSlot.isOcuppied) return;
+        
         base.OnClick(fieldSlot);
     }
 

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 public class BattleAction : Action
 {
-    public Card card1;
-    public Card card2;
+    public FieldSlot card1;
+    public FieldSlot card2;
 
     bool isFinish;
     public override void ActionActivation()
@@ -16,7 +16,12 @@ public class BattleAction : Action
 
     public override void ActionSolve()
     {
-        Debug.Log("Card 1 " + card1.soulPoints + "Card 2 " + card2.soulPoints);
+        Debug.Log("Card 1 " + card1.currentCard.soulPoints + "Card 2 " + card2.currentCard.soulPoints);
+
+        if (card1.currentCard.soulPoints > card2.currentCard.soulPoints) card2.SendCardToGraveyard(); // gana card1
+        else if (card1.currentCard.soulPoints < card2.currentCard.soulPoints) card1.SendCardToGraveyard(); // gana card2
+        else { card1.SendCardToGraveyard(); card2.SendCardToGraveyard(); }// empate
+
         OnEndBattle();
     }
 
@@ -28,10 +33,13 @@ public class BattleAction : Action
         {
             if (card1 != null && card2 != null)
             {
-                isFinish = true;
-                ChainManager.Instances.AddActionToChain(this);
-                OnFinishAction?.Invoke();
-                Debug.Log("Add Action to Chain");
+                if (card1.player != card2.player)
+                {
+                    isFinish = true;
+                    ChainManager.Instances.AddActionToChain(this);
+                    OnFinishAction?.Invoke();
+                    Debug.Log("Add Action to Chain");
+                }
             }
             await Task.Yield();
         }

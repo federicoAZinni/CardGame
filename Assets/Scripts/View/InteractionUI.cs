@@ -21,7 +21,7 @@ public class InteractionUI : MonoBehaviour
     //-------------------------------------------------------------------------------------------------
     public virtual void OnClick(Interactable interactable)
     {
-     if(interactable.Player == GameManager.currentPlayer) GameManager.Instance.OnClick(interactable);
+      GameManager.Instance.OnClick(interactable);
     }
 
     

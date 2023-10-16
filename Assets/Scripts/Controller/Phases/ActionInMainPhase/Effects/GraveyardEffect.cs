@@ -33,6 +33,7 @@ public class GraveyardEffect : EffectAction
             {
                 isFinish = true;
                 ChainManager.Instances.AddActionToChain(this);
+                OnFinishAction?.Invoke();
                 Debug.Log("Add Action to Chain");
             }
             await Task.Yield();

@@ -37,6 +37,7 @@ public class MainPhase : Phase
 
     public void OnEnd()
     {
+        GameManager.OnActionStart?.Invoke(false); // LLamamos este evento para que los ui puedan abrir los menus nuevamente
         Debug.Log("MainPhase End");
     }
 
@@ -50,16 +51,12 @@ public class MainPhase : Phase
         switch (currentActionSelected)
         {
             case ActionSelected.Battle:  //Preparacion para iniciar la batalla
-                Debug.Log("Esperando que selecione 2 card para pelear");
-                if (currentBattleAction.card1 == null)
-                {
-                    currentBattleAction.card1 = currentCardSeleted;
-                    currentCardSeleted = null;
-                }
-                else
-                {
-                    if (currentCardSeleted != null) currentBattleAction.card2 = currentCardSeleted;
-                }
+                Debug.Log("Esperando que selecione 2 cartas en el campo para pelear");
+                
+                if (currentFieldSlotSeleted != null &&
+                    currentFieldSlotSeleted.isOcuppied &&
+                    currentFieldSlotSeleted.player != currentBattleAction.card1.player) currentBattleAction.card2 = currentFieldSlotSeleted;
+                
                 break;
 
 
@@ -84,11 +81,12 @@ public class MainPhase : Phase
         }
     }
 
-    public void ActiveBattleAction() // Inicialización de una nueva Batalla
+    public void ActiveBattleAction(FieldSlot cardAttack) // Inicialización de una nueva Batalla
     {
         Debug.Log("Battle Action Selected");
-        currentCardSeleted = null;
+        currentFieldSlotSeleted = null;
         currentBattleAction = new BattleAction();
+        currentBattleAction.card1 = cardAttack;
         currentBattleAction.ActionActivation();
         currentBattleAction.OnFinishAction += OnEndAction;
 

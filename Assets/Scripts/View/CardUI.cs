@@ -57,4 +57,10 @@ public class CardUI : InteractionUI
 
         currentCard = null;
     }
+
+    public void SendCardToGraveyard()
+    {
+        GameManager.Instance.graveyards[currentCard.player].AddCardToGraveyard(currentCard);
+        RemoveCardToNull();
+    }
 }
