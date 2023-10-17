@@ -15,6 +15,8 @@ public class MainPhase : Phase
     Card currentCardSeleted;
     Deck currentDeckSeleted;
     FieldSlot currentFieldSlotSeleted;
+    CardUI currentCardUISelected;
+    FieldSlotUI currentFieldSlotUISelected;
 
 
     public void OnClick(Interactable interactable) //Comprobamos que tipo de objecto hicimos click
@@ -24,11 +26,24 @@ public class MainPhase : Phase
         if (interactable.GetType().IsEquivalentTo(typeof(FieldSlot))) { currentFieldSlotSeleted = (FieldSlot)interactable; Debug.Log("Entro fieldSlot"); }
     }
 
+    public void CancelAction()
+    {
+
+        currentBattleAction?.ActionCancel();
+        currentEffectAction?.ActionCancel();
+        currentSummonAction?.ActionCancel();
+        OnEndAction();
+    }
+
     public void OnEndAction()// se llama en el evento OnFinish de cada Action
     {
         currentCardSeleted = null;
         currentDeckSeleted = null;
         currentFieldSlotSeleted = null;
+
+        currentBattleAction = null;
+        currentEffectAction = null;
+        currentSummonAction = null;
 
         GameManager.OnActionStart?.Invoke(false); // LLamamos este evento para que los ui puedan abrir los menus nuevamente
 
@@ -53,15 +68,19 @@ public class MainPhase : Phase
             case ActionSelected.Battle:  //Preparacion para iniciar la batalla
                 Debug.Log("Esperando que selecione 2 cartas en el campo para pelear");
                 
-                if (currentFieldSlotSeleted != null &&
+                if (currentFieldSlotSeleted != null && // espero la carta que va a ser atacada
                     currentFieldSlotSeleted.isOcuppied &&
-                    currentFieldSlotSeleted.player != currentBattleAction.card1.player) currentBattleAction.card2 = currentFieldSlotSeleted;
+                    currentFieldSlotSeleted.player != currentBattleAction.fieldSlotCard1.player) currentBattleAction.fieldSlotCard2 = currentFieldSlotSeleted;
                 
                 break;
 
 
 
             case ActionSelected.Effect://Preparacion para iniciar la Effecto
+                if (currentFieldSlotSeleted != null && // espero la carta que va a ser atacada
+                    currentFieldSlotSeleted.isOcuppied &&
+                    currentFieldSlotSeleted.player != currentEffectAction.cardEffectActivate.player) currentEffectAction.cardSelectedToDestroy = currentFieldSlotSeleted.fieldSlotUI;
+                
                 break;
 
 
@@ -81,24 +100,27 @@ public class MainPhase : Phase
         }
     }
 
-    public void ActiveBattleAction(FieldSlot cardAttack) // Inicialización de una nueva Batalla
+    public void ActiveBattleAction(InteractionUI cardAttack) // Inicialización de una nueva Batalla
     {
         Debug.Log("Battle Action Selected");
         currentFieldSlotSeleted = null;
         currentBattleAction = new BattleAction();
-        currentBattleAction.card1 = cardAttack;
+        FieldSlotUI fieldSlotUI = (FieldSlotUI)cardAttack;
+        currentBattleAction.fieldSlotCard1 = fieldSlotUI.fieldSlot;
         currentBattleAction.ActionActivation();
         currentBattleAction.OnFinishAction += OnEndAction;
 
         currentActionSelected = ActionSelected.Battle;
     }
-    public void ActiveEffectAction(string effect)// Inicialización de una nueva Effect
+    public void ActiveEffectAction(string effect, InteractionUI cardAttack)// Inicialización de una nueva Effect
     {
         Debug.Log("Effect Action Selected");
+
         switch (effect)
         {
             case EffectTypes.DestroyEffect:
-                currentEffectAction = new DestroyEffect(); // crear el efecto de la carta
+                currentEffectAction = new DestroyEffect();// crear el efecto de la carta
+                currentEffectAction.cardEffectActivate = cardAttack;
                 break;
             case EffectTypes.GraveyardEffect:
                 currentEffectAction = new GraveyardEffect(); // crear el efecto de la carta

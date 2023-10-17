@@ -10,7 +10,7 @@ public class FieldSlot : MonoBehaviour, Interactable
     public Card currentCard;
     public bool isOcuppied;
     public int player;
-    [SerializeField] FieldSlotUI fieldSlotUI;
+    public FieldSlotUI fieldSlotUI;
 
     public int Player => player;
 
@@ -25,17 +25,11 @@ public class FieldSlot : MonoBehaviour, Interactable
     {
         isOcuppied = false;
         currentCard = null;
-        fieldSlotUI.RemoveFieldSlotToNull();
     }
 
     public void ResetAttack()
     {
         canAttack = true;
-    }
-    public void SendCardToGraveyard()
-    {
-        GameManager.Instance.graveyards[currentCard.player].AddCardToGraveyard(currentCard);
-        RemoveCard();
     }
 }
 public enum TypeFieldSlot

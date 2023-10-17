@@ -18,7 +18,7 @@ public class ChainManager : MonoBehaviour
     {
         actionChainList.Add(action);
         Debug.Log("ChainList Count: " + actionChainList.Count);
-        GameManager.Instance.ChangeCurrentPlayer();
+        //GameManager.Instance.ChangeCurrentPlayer();
     }
 
     public void SolveChain()

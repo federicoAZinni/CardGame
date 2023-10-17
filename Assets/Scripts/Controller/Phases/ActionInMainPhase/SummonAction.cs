@@ -18,7 +18,11 @@ public class SummonAction : Action
     {
         OnEndSummon();
     }
-
+    public override void ActionCancel()
+    {
+        isFinish = true;
+        Debug.Log("Action Canceled");
+    }
     async void Summon()
     {
         Debug.Log("Start Summon Action");

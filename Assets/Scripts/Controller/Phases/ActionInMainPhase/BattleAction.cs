@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 public class BattleAction : Action
 {
-    public FieldSlot card1;
-    public FieldSlot card2;
+    public FieldSlot fieldSlotCard1;
+    public FieldSlot fieldSlotCard2;
 
     bool isFinish;
     public override void ActionActivation()
@@ -14,13 +14,19 @@ public class BattleAction : Action
         Battle();
     }
 
+    public override void ActionCancel()
+    {
+        isFinish = true;
+        Debug.Log("Action Canceled");
+    }
+
     public override void ActionSolve()
     {
-        Debug.Log("Card 1 " + card1.currentCard.soulPoints + "Card 2 " + card2.currentCard.soulPoints);
+        Debug.Log("Card 1 " + fieldSlotCard1.currentCard.soulPoints + "Card 2 " + fieldSlotCard2.currentCard.soulPoints);
 
-        if (card1.currentCard.soulPoints > card2.currentCard.soulPoints) card2.SendCardToGraveyard(); // gana card1
-        else if (card1.currentCard.soulPoints < card2.currentCard.soulPoints) card1.SendCardToGraveyard(); // gana card2
-        else { card1.SendCardToGraveyard(); card2.SendCardToGraveyard(); }// empate
+        if (fieldSlotCard1.currentCard.soulPoints > fieldSlotCard2.currentCard.soulPoints) fieldSlotCard2.fieldSlotUI.SendCardToGraveyard(); // gana card1
+        else if (fieldSlotCard1.currentCard.soulPoints < fieldSlotCard2.currentCard.soulPoints) fieldSlotCard1.fieldSlotUI.SendCardToGraveyard(); // gana card2
+        else { fieldSlotCard1.fieldSlotUI.SendCardToGraveyard(); fieldSlotCard2.fieldSlotUI.SendCardToGraveyard(); }// empate
 
         OnEndBattle();
     }
@@ -31,9 +37,9 @@ public class BattleAction : Action
 
         while (!isFinish)
         {
-            if (card1 != null && card2 != null)
+            if (fieldSlotCard1 != null && fieldSlotCard2 != null)
             {
-                if (card1.player != card2.player)
+                if (fieldSlotCard1.player != fieldSlotCard2.player)
                 {
                     isFinish = true;
                     ChainManager.Instances.AddActionToChain(this);

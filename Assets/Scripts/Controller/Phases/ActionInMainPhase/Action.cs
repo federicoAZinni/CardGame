@@ -8,6 +8,9 @@ public abstract class Action
 {
     public abstract void ActionActivation();
     public abstract void ActionSolve();
+    public abstract void ActionCancel();
+
+
 
     public System.Action OnFinishAction;
 }

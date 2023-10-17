@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Threading.Tasks;
 public class EffectAction : Action
 {
+    public InteractionUI cardEffectActivate;
+    public FieldSlotUI cardSelectedToDestroy;
     public override void ActionActivation()
     {
         StartEffect();
@@ -22,5 +24,10 @@ public class EffectAction : Action
     public override void ActionSolve()
     {
         
+    }
+    public override void ActionCancel()
+    {
+        
+        Debug.Log("Action Canceled");
     }
 }

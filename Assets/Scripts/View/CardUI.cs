@@ -17,10 +17,13 @@ public class CardUI : InteractionUI
     [Header("--- Menu Button Refs---")]
     [SerializeField] Button Summon_Btn;
     [SerializeField] Button Effect_Btn;
+
+    public int Player => throw new System.NotImplementedException();
+
     private void Awake()
     {                                                                                                
         Summon_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(currentCard.player, ActionSelected.Summon); });  //solo llama a la acion si es el turno
-        Effect_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(currentCard.player, ActionSelected.Effect, currentCard.effect); });  //solo llama a la acion si es el turno
+        Effect_Btn.onClick.AddListener(() => { GameManager.Instance.StartActionBtn(currentCard.player, ActionSelected.Effect, currentCard.effect,this); });  //solo llama a la acion si es el turno
     }
 
     public void OnClick() // pasamos el Deck o la carta por los enevetos del boton
@@ -58,9 +61,10 @@ public class CardUI : InteractionUI
         currentCard = null;
     }
 
-    public void SendCardToGraveyard()
+    public override void SendCardToGraveyard()
     {
         GameManager.Instance.graveyards[currentCard.player].AddCardToGraveyard(currentCard);
+        gameObject.SetActive(false);
         RemoveCardToNull();
     }
 }

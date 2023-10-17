@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     }
 
     //------------------------StartAction (Los llaman los botenes de las cartas)---------------------------------------------
-    public void StartActionBtn(int player, ActionSelected action , string effect ="",FieldSlot fieldSlot = null)
+    public void StartActionBtn(int player, ActionSelected action , string effect ="",InteractionUI interactionUI = null)
     {
         if(player != currentPlayer) { Debug.Log("No es tu turno"); return; }
 
@@ -94,10 +94,10 @@ public class GameManager : MonoBehaviour
             switch (action)
             {
                 case ActionSelected.Battle:
-                    phase.ActiveBattleAction(fieldSlot);
+                    phase.ActiveBattleAction(interactionUI);
                     break;
                 case ActionSelected.Effect:
-                    phase.ActiveEffectAction(effect);
+                    phase.ActiveEffectAction(effect, interactionUI);
                     break;
                 case ActionSelected.Summon:
                     phase.ActiveSummonAction();
@@ -114,10 +114,19 @@ public class GameManager : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------------------
 
 
-    public void TurnOver()
+    public void TurnOver()// lo llama el buton endturn
     {
         ChangeCurrentPlayer();
         ChangePhase(new DrawPhase());
+    }
+
+    public void CancelAction()// lo llama el button cancel
+    {
+        if (currentPhase.GetType().IsEquivalentTo(typeof(MainPhase)))
+        {
+            MainPhase phase = (MainPhase)currentPhase;
+            phase.CancelAction();
+        }
     }
 
     public Card ReturnNewCard()// solo para testear

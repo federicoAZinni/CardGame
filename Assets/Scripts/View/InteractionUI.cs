@@ -6,6 +6,7 @@ public class InteractionUI : MonoBehaviour
 {
     //-------------Para que no se habra el menu del fieldslot y cardui cuando estamos con una action
     protected bool canShowMenu;
+    public int player;
     private void OnEnable()
     {
         GameManager.OnActionStart += CanShowMenu;
@@ -24,5 +25,8 @@ public class InteractionUI : MonoBehaviour
       GameManager.Instance.OnClick(interactable);
     }
 
-    
+    public virtual void SendCardToGraveyard()
+    {
+        
+    }
 }
